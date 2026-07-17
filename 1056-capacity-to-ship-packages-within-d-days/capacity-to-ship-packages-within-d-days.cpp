@@ -11,7 +11,6 @@ class Solution {
 public:
     int shipWithinDays(vector<int>& weights, int days) {
         int sum = 0;
-       // sort(weights.begin(),weights.end());
         for(auto w : weights) sum += w;
 
         int l = *max_element(weights.begin(), weights.end()), r = sum;
