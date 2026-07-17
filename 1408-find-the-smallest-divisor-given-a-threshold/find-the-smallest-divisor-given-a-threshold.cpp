@@ -1,3 +1,13 @@
+/*
+ * @lc app=leetcode id=1282 lang=cpp
+ *
+ * [1282] Group the People Given the Group Size They Belong To
+ */
+
+// @lc code=start
+#include<bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
     int smallestDivisor(vector<int>& nums, int threshold) {
@@ -23,3 +33,5 @@ public:
         return mx + 1;
     }
 };
+// @lc code=end
+
