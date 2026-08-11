@@ -1,34 +1,27 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-      int n = nums.size();
-      int t = n-1; 
-      
-      vector<pair<int,int>>v;
-      
+        int n = nums.size();
 
-      for(int i=n-2; i>=0; i--){
-        if(nums[i]+i >= t){
-           
-            int mn = INT_MAX;
-            if(nums[i] + i >= n-1){
-                mn = 1;
+        int far = nums[0];
+        int near = 1;
+        int cnt = 1;
+
+        if(n<=1) return 0;
+
+        while(far<n-1){
+            int nextfar = far;
+            for(int i = near; i<=far; i++){
+                nextfar = max(nextfar, nums[i] + i);
             }
-            else{
-            for(int j = (int)v.size()-1; j>=0; j--){
-                if(nums[i] + i >= v[j].first){
-                    mn = min(mn,v[j].second+1);
-                }
-            }
-            }
-            if(mn == INT_MAX) mn = 1;
-            v.push_back({i,mn});
-            t = i;
+            near = far+1;
+            far = nextfar;
+
+            cnt++;
+
+            //if(far >= n-1) return cnt;
         }
-      } 
 
-      if(!v.empty() && v.back().first == 0) return v.back().second;
-
-      return 0 ;
+        return cnt;
     }
 };
