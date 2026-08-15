@@ -11,7 +11,8 @@ public:
 
         if(ans!=0) return n;
 
-        if(nonzero) return n-1;
+        if(nonzero) return n-1; // all other element xor value is same to that nonzero value so remoe that nonzero value
+        
 
 
         return 0;
