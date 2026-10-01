@@ -17,13 +17,13 @@ class Solution {
         return open == 0;
     }
 
-    void rec(string &s, string &cur, int rem, int idx,
+    void rec(string &s, string &cur, int include, int idx,
              priority_queue<pair<int,string>>& p) {
 
         
         if(idx == s.size()) {
             if(check(cur)) {
-                p.push({rem, cur});
+                p.push({include, cur});
             }
             return;
         }
@@ -33,7 +33,7 @@ class Solution {
 
             cur.push_back(s[idx]);
 
-            rec(s, cur, rem + 1, idx + 1, p);
+            rec(s, cur,include + 1, idx + 1, p);
 
             cur.pop_back();
         }
@@ -42,17 +42,17 @@ class Solution {
             
             cur.push_back(s[idx]);
 
-            rec(s, cur, rem + 1, idx + 1, p);
+            rec(s, cur,include + 1, idx + 1, p);
 
             cur.pop_back();
 
             
-            rec(s, cur, rem, idx + 1, p);
+            rec(s, cur,include, idx + 1, p);
         }
     }
 
 public:
-    vector<string> removeInvalidParentheses(string s) {
+    vector<string>removeInvalidParentheses(string s) {
 
         priority_queue<pair<int,string>> p;
 
