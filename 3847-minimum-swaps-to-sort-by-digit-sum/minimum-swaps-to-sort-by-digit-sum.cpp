@@ -17,18 +17,22 @@ public:
 
         sort(p.begin(), p.end());
 
+        unordered_map<int,int>mp;
+        for(int i = 0; i<n; i++){
+            mp[p[i].second.first] = i;
+        }
+
         int ans = 0;
         int i = 0;
-       for(int i = 0; i<n; i++){
+      for (int i = 0; i < n; i++) {
+        while (p[i].second.second != i) {
         int idx = p[i].second.second;
-        if(idx == i) continue;
 
-        swap(nums[i],nums[idx]);
-        swap(p[i],p[idx]);
-
-        ans ++;
-        i--;
+        swap(nums[i], nums[idx]);
+        swap(p[i].second.second, p[idx].second.second);
+        ans++;
        }
+}
         return ans;
     }
 };
