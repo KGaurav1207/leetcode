@@ -1,50 +1,49 @@
 class Solution {
-public:
-    static constexpr long long MOD = 1000000007LL;
+    static constexpr long long MOD = 1e9 + 7;
+    vector<long long> fact, invFact;
 
-    vector<vector<long long>> comb;
-
-    long long count(const vector<int>& arr) {
-        int n = arr.size();
-
-        if (n <= 2) {
-            return 1;
+    long long power(long long b, long long e) {
+        long long r = 1;
+        b %= MOD;
+        while (e > 0) {
+            if (e & 1) r = r * b % MOD;
+            b = b * b % MOD;
+            e >>= 1;
         }
-
-        int root = arr[0];
-
-        vector<int> left, right;
-
-        for (int x : arr) {
-            if (x < root) {
-                left.push_back(x);
-            } else if (x > root) {
-                right.push_back(x);
-            }
-        }
-
-        int L = left.size();
-        int R = right.size();
-
-        long long ways = comb[L + R][L];
-
-        return ways * count(left) % MOD * count(right) % MOD;
+        return r;
     }
 
+    long long combination(int nl, int nr) {
+        return fact[nl + nr] * invFact[nl] % MOD * invFact[nr] % MOD;
+    }
+
+    long long ways(const vector<int>& arr) {
+        if (arr.size() <= 2) return 1;
+
+        int root = arr[0];
+        vector<int> left, right;
+        for (int num : arr) {
+            if (num < root) left.push_back(num);
+            else if (num > root) right.push_back(num);
+        }
+
+        return ways(left) * ways(right) % MOD
+               * combination(left.size(), right.size()) % MOD;
+    }
+
+public:
     int numOfWays(vector<int>& nums) {
         int n = nums.size();
 
-        comb.assign(n + 1, vector<long long>(n + 1, 0));
+        fact.assign(n + 1, 1);
+        for (int i = 1; i <= n; i++)
+            fact[i] = fact[i - 1] * i % MOD;
 
-        for (int i = 0; i <= n; i++) {
-            comb[i][0] = comb[i][i] = 1;
+        invFact.assign(n + 1, 1);
+        invFact[n] = power(fact[n], MOD - 2);   // Fermat's little theorem
+        for (int i = n; i >= 1; i--)
+            invFact[i - 1] = invFact[i] * i % MOD;
 
-            for (int j = 1; j < i; j++) {
-                comb[i][j] =
-                    (comb[i - 1][j - 1] + comb[i - 1][j]) % MOD;
-            }
-        }
-
-        return (count(nums) - 1 + MOD) % MOD;
+        return (ways(nums) - 1 + MOD) % MOD;
     }
 };
