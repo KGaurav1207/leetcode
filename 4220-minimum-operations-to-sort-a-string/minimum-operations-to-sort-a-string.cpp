@@ -9,7 +9,7 @@ public:
         char mx = *max_element(s.begin(), s.end());
 
         if (s[0] == mn || s[n-1] == mx) return 1;
-        if (s.find(mn) < (size_t)(n-1) || s.rfind(mx) > 0) return 2;
+        if (s.find(mn) < n-1 || s.rfind(mx) > 0) return 2;
         return 3;
     }
 };
